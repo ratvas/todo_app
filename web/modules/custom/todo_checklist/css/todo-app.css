@@ -5,4 +5,27 @@
 
 input[type=checkbox]:checked + label.form-item__label{
   text-decoration: line-through;
+  color: gray;
+}
+
+::placeholder {
+  color: gray;
+}
+
+#edit-todo-wrapper .form-item-master-on-off {
+  display: inline-block;
+  margin-right:10px;
+}
+
+#edit-todo-wrapper .form-item-title {
+  display: inline-block;
+}
+
+.todo-items-left {
+  margin-right:10px;
+}
+
+.button .form-actions {
+  padding: 7px;
+  height: auto;
 }

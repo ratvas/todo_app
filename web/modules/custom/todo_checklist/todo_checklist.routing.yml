@@ -16,6 +16,6 @@ todo_checklist.todoapp:
   path: '/todoapp'
   defaults:
     _controller:  '\Drupal\todo_checklist\Controller\ToDoAppController::content'
-    _title: 'Todo App'
+    _title: 'todos'
   requirements:
     _permission: 'access content'

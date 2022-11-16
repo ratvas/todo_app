@@ -62,21 +62,37 @@ class TodoAppForm extends FormBase
         '#type' => 'actions',
       ];
 
-      // Add a submit button
-      $form['todo_wrapper']['actions']['submit'] = [
-        '#type' => 'submit',
-        '#value' => $this->t('Submit'),
+      $form['todo_wrapper']['actions']['items_left'] = [
+        '#type' => 'markup',
+        '#markup' => '*x* items left',
+        '#prefix' => '<div class="todo-items-left">',
+        '#suffix' => '</div>',
       ];
 
-      // Add a reset button
-      $form['todo_wrapper']['actions']['reset'] = [
+      $form['todo_wrapper']['actions']['all'] = [
         '#type' => 'button',
-        '#button_type' => 'reset',
-        '#value' => $this->t('Reset'),
-        '#attributes' => [
-          'onclick' => 'this.form.reset(); return false;',
-        ],
+        '#value' => $this->t('All'),
+        '#attributes' => array('onclick' => 'return (false);'),
       ];
+
+      $form['todo_wrapper']['actions']['active'] = [
+        '#type' => 'button',
+        '#value' => $this->t('Actives'),
+        '#attributes' => array('onclick' => 'return (false);'),
+      ];
+
+      $form['todo_wrapper']['actions']['completed'] = [
+        '#type' => 'button',
+        '#value' => $this->t('Completed'),
+        '#attributes' => array('onclick' => 'return (false);'),
+      ];
+
+      $form['todo_wrapper']['actions']['clear_completed'] = [
+        '#type' => 'button',
+        '#value' => $this->t('Clear completed'),
+        '#attributes' => array('onclick' => 'return (false);'),
+      ];
+
     }
     $form['#theme'] = 'todo_app_form';
 
@@ -95,23 +111,16 @@ class TodoAppForm extends FormBase
    * @param array $form
    * @param FormStateInterface $form_state
    */
-  public function validateForm(array &$form, FormStateInterface $form_state)
-  {
-    $title = $form_state->getValue('title');
-    if (strlen($title) < 15) {
-      $form_state->setErrorByName('title', $this->t('The title must be at least 15 characters long.'));
-    }
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+
   }
 
   /**
    * @param array $form
    * @param FormStateInterface $form_state
    */
-  public function submitForm(array &$form, FormStateInterface $form_state)
-  {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
 
-    $title = $form_state->getValue('title');
-    $this->messenger()->addStatus($this->t('You specified a title of @title.', ['@title' => $title]));
   }
 
   /**

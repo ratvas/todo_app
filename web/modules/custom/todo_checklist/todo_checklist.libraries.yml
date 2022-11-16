@@ -1,7 +1,8 @@
 todo_checklist:
   version: 1.x
   css:
-    css/todo-app.css: {}
+    theme:
+      css/todo-app.css: {}
   js:
     js/todo-app.js: {}
   dependencies:
