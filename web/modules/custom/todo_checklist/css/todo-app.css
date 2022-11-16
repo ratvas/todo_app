@@ -1,0 +1,8 @@
+/**
+ * @file
+ * Styles for form elements.
+ */
+
+input[type=checkbox]:checked + label.form-item__label{
+  text-decoration: line-through;
+}

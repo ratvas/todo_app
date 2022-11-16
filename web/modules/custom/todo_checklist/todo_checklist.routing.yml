@@ -4,10 +4,18 @@ entity.todochecklist.settings:
     _form: '\Drupal\todo_checklist\Form\TodochecklistSettingsForm'
     _title: 'ToDoChecklist'
 
+entity.todochecklist.collection:
+  path: '/admin/content/todochecklist'
+  defaults:
+    _entity_list: 'todochecklist'
+    _title: 'Todochecklist Content'
+  requirements:
+    _permission: 'access content'
+
 todo_checklist.todoapp:
   path: '/todoapp'
   defaults:
-    _form:  '\Drupal\todo_checklist\Form\ToDoAppForm'
+    _controller:  '\Drupal\todo_checklist\Controller\ToDoAppController::content'
     _title: 'Todo App'
   requirements:
     _permission: 'access content'

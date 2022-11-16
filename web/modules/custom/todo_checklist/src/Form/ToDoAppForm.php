@@ -5,7 +5,6 @@ namespace Drupal\todo_checklist\Form;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -24,47 +23,62 @@ class TodoAppForm extends FormBase
   public function buildForm(array $form, FormStateInterface $form_state)
   {
 
-    // Checkbox for checking/unchecking all options.
-    $form['master_on_off'] = [
-      '#type' => 'checkbox',
-    ];
-
-    // Textfield.
-    $form['title'] = [
-      '#type' => 'textfield',
-      '#attributes' => [
-        'placeholder' => $this->t('What needs to be done?'),
-      ],
-      '#size' => 60,
-      '#maxlength' => 128,
-    ];
-
-    // CheckBoxes, ToDoChecklist options.
     $options = $this->getOptions();
-    $form['todo_checkboxes'] = [
-      '#type' => 'checkboxes',
-      '#options' => $options,
+    $form['todo_wrapper'] = [
+      '#type' => 'fieldset',
+      '#open' => TRUE,
+      '#collapsible' => FALSE,
+      '#title' => '',
     ];
 
-    $form['actions'] = [
-      '#type' => 'actions',
-    ];
+    if (!$options) {
+      $form['todo_wrapper']['markup'] = [
+        '#markup' => $this->t('At least one ToDoChecklist entity needs to be created.'),
+      ];
+    }
+    else {
+      // Checkbox for checking/unchecking all options.
+      $form['todo_wrapper']['master_on_off'] = [
+        '#type' => 'checkbox',
+      ];
 
-    // Add a submit button
-    $form['actions']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Submit'),
-    ];
+      // Textfield.
+      $form['todo_wrapper']['title'] = [
+        '#type' => 'textfield',
+        '#attributes' => [
+          'placeholder' => $this->t('What needs to be done?'),
+        ],
+        '#size' => 60,
+        '#maxlength' => 128,
+      ];
 
-    // Add a reset button
-    $form['actions']['reset'] = [
-      '#type' => 'button',
-      '#button_type' => 'reset',
-      '#value' => $this->t('Reset'),
-      '#attributes' => [
-        'onclick' => 'this.form.reset(); return false;',
-      ],
-    ];
+      // CheckBoxes, ToDoChecklist options.
+      $form['todo_wrapper']['todo_checkboxes'] = [
+        '#type' => 'checkboxes',
+        '#options' => $options[0],
+      ];
+
+      $form['todo_wrapper']['actions'] = [
+        '#type' => 'actions',
+      ];
+
+      // Add a submit button
+      $form['todo_wrapper']['actions']['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Submit'),
+      ];
+
+      // Add a reset button
+      $form['todo_wrapper']['actions']['reset'] = [
+        '#type' => 'button',
+        '#button_type' => 'reset',
+        '#value' => $this->t('Reset'),
+        '#attributes' => [
+          'onclick' => 'this.form.reset(); return false;',
+        ],
+      ];
+    }
+    $form['#theme'] = 'todo_app_form';
 
     return $form;
   }
@@ -107,18 +121,30 @@ class TodoAppForm extends FormBase
    */
   public function getOptions()
   {
-    $options = ['Drupal', 'Wp'];
-
+    $options = [];
     $http_client = new Client();
     $host = \Drupal::request()->getSchemeAndHttpHost();
-    $request_options[RequestOptions::HEADERS]['Accept'] = 'application/vnd.api+json';
-
-    $request = (new Request('GET', $host . '/web/jsonapi/todochecklist'));
+    // Get session token.
+    $request = (new Request('GET', $host . '/web/session/token'));
     $response = $http_client->send($request);
-    $body = Json::decode($response->getBody()->getContents());
-    ksm($body);
+    $token = $response->getBody()->getContents();
+    if ($token) {
+      // Get ToDoChecklist entities json data.
+      $request_options[RequestOptions::HEADERS] = [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+        'X-CSRF-Token' => $token,
+      ];
+      $request = (new Request('GET', $host . '/web/jsonapi/todochecklist', $request_options));
+      $response = $http_client->send($request);
+      $body = Json::decode($response->getBody()->getContents());
+      if ($body['data']) {
+        foreach ($body['data'] as $checklist) {
+          $options[] = $checklist['attributes']['options'];
+        }
+      }
+    }
 
     return $options;
   }
-
 }

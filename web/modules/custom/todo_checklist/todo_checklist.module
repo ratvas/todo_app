@@ -17,6 +17,11 @@ function todo_checklist_theme() {
     'todochecklist' => [
       'render element' => 'elements',
     ],
+    'todo_app' => [
+      'variables' => [
+        'form' => NULL
+      ],
+    ],
   ];
 }
 
@@ -81,4 +86,22 @@ function todo_checklist_user_predelete(UserInterface $account) {
     ->execute();
   $todochecklists = $storage->loadMultiple($todochecklist_ids);
   $storage->delete($todochecklists);
+}
+
+/**
+ * Implements hook_page_attachments().
+ *
+ */
+function todo_checklist_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'todo_checklist/todo_checklist';
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ */
+function todo_checklist_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if($form['#id'] == 'todo_app_form') {
+    $form['#attached']['library'][] = 'todo_checklist/todo_checklist';
+  }
 }

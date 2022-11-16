@@ -9,3 +9,5 @@ dependencies:
   - drupal:jsonapi_extras
   - drupal:admin_toolbar
   - drupal:admin_toolbar_tools
+libraries:
+  - todo_checklist/todo_checklist
