@@ -36,7 +36,7 @@ use Drupal\user\EntityOwnerTrait;
  *     }
  *   },
  *   base_table = "todochecklist",
- *   admin_permission = "access content",
+ *   admin_permission = "administer todochecklist",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",

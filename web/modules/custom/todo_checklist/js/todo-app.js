@@ -83,6 +83,7 @@
         $('#edit-todo-checkboxes input:checkbox').each( function() {
           if (this.checked) {
             $(this).parent().remove();
+            $(this).parent().next().hide();
             $("#edit-clear-completed").hide();
           }
         });
