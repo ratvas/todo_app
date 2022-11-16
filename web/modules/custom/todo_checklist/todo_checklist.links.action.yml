@@ -1,0 +1,5 @@
+todochecklist.add_form:
+  title: 'Add todochecklist'
+  route_name: entity.todochecklist.add_form
+  appears_on:
+    - entity.todochecklist.collection

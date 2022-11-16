@@ -1,0 +1,10 @@
+entity.todochecklist.settings:
+  title: 'ToDoChecklist'
+  description: 'Configure a ToDoChecklist entity type.'
+  route_name:  entity.todochecklist.settings
+  parent: system.admin_structure
+entity.todochecklist.collection:
+  title: 'ToDoChecklists'
+  description: 'List of todochecklists.'
+  route_name: entity.todochecklist.collection
+  parent: system.admin_content

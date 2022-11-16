@@ -1,0 +1,22 @@
+entity.todochecklist.settings:
+  title: 'Settings'
+  route_name: entity.todochecklist.settings
+  base_route: entity.todochecklist.settings
+entity.todochecklist.view:
+  title: 'View'
+  route_name: entity.todochecklist.canonical
+  base_route: entity.todochecklist.canonical
+entity.todochecklist.edit_form:
+  title: 'Edit'
+  route_name: entity.todochecklist.edit_form
+  base_route: entity.todochecklist.canonical
+entity.todochecklist.delete_form:
+  title: 'Delete'
+  route_name: entity.todochecklist.delete_form
+  base_route: entity.todochecklist.canonical
+  weight: 10
+entity.todochecklist.collection:
+  title: 'ToDoChecklists'
+  route_name: entity.todochecklist.collection
+  base_route: system.admin_content
+  weight: 10

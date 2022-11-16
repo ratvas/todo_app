@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ * Provides a todochecklist entity type.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\todo_checklist\Entity\Todochecklist;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function todo_checklist_theme() {
+  return [
+    'todochecklist' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for todochecklist templates.
+ *
+ * Default template: todochecklist.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the todochecklist information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_todochecklist(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function todo_checklist_user_cancel($edit, UserInterface $account, $method) {
+  switch ($method) {
+    case 'user_cancel_block_unpublish':
+      // Unpublish todochecklists.
+      $storage = \Drupal::entityTypeManager()->getStorage('todochecklist');
+      $todochecklist_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->condition('status', 1)
+        ->execute();
+      foreach ($storage->loadMultiple($todochecklist_ids) as $todochecklist) {
+        $todochecklist->set('status', FALSE);
+        $todochecklist->save();
+      }
+      break;
+
+    case 'user_cancel_reassign':
+      // Anonymize todochecklists.
+      $storage = \Drupal::entityTypeManager()->getStorage('todochecklist');
+      $todochecklist_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->execute();
+      foreach ($storage->loadMultiple($todochecklist_ids) as $todochecklist) {
+        $todochecklist->setOwnerId(0);
+        $todochecklist->save();
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for user entities.
+ */
+function todo_checklist_user_predelete(UserInterface $account) {
+  // Delete todochecklists.
+  $storage = \Drupal::entityTypeManager()->getStorage('todochecklist');
+  $todochecklist_ids = $storage->getQuery()
+    ->condition('uid', $account->id())
+    ->execute();
+  $todochecklists = $storage->loadMultiple($todochecklist_ids);
+  $storage->delete($todochecklists);
+}

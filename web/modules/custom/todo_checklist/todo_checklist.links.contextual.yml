@@ -1,0 +1,10 @@
+entity.todochecklist.edit_form:
+  route_name: entity.todochecklist.edit_form
+  group: todochecklist
+  title: Edit
+
+entity.todochecklist.delete_form:
+  route_name: entity.todochecklist.delete_form
+  group: todochecklist
+  title: Delete
+  weight: 10

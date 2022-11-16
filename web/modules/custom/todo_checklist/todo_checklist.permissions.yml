@@ -1,0 +1,3 @@
+administer todochecklist:
+  title: 'Administer todochecklist settings'
+  restrict access: true

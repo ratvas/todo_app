@@ -1,0 +1,9 @@
+todo-checkbox:
+  version: 1.x
+  css:
+    layout:
+      css/todo_checkbox-layout.css: {}
+    theme:
+      css/todo_checkbox-theme.css: {}
+  js:
+    js/todo_checkbox.js: {}

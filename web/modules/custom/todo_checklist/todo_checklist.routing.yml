@@ -1,0 +1,13 @@
+entity.todochecklist.settings:
+  path: 'admin/structure/todochecklist'
+  defaults:
+    _form: '\Drupal\todo_checklist\Form\TodochecklistSettingsForm'
+    _title: 'ToDoChecklist'
+
+todo_checklist.todoapp:
+  path: '/todoapp'
+  defaults:
+    _form:  '\Drupal\todo_checklist\Form\ToDoAppForm'
+    _title: 'Todo App'
+  requirements:
+    _permission: 'access content'
