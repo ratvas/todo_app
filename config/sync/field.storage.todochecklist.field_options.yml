@@ -1,0 +1,21 @@
+uuid: 09d887f0-5230-4546-9181-82df1403869c
+langcode: en
+status: true
+dependencies:
+  module:
+    - todo_checklist
+id: todochecklist.field_options
+field_name: field_options
+entity_type: todochecklist
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,33 @@
+uuid: 02480dab-af86-4175-9fdc-111c5299041f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.todochecklist.todochecklist.field_options
+  module:
+    - todo_checklist
+id: todochecklist.todochecklist.default
+targetEntityType: todochecklist
+bundle: todochecklist
+mode: default
+content:
+  field_options:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

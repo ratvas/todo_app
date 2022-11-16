@@ -1,0 +1,20 @@
+uuid: 5a2b55a6-cd41-4794-b5d6-0d78786db54c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.todochecklist.field_options
+  module:
+    - todo_checklist
+id: todochecklist.todochecklist.field_options
+field_name: field_options
+entity_type: todochecklist
+bundle: todochecklist
+label: Options
+description: 'Options for ToDo checklist'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
