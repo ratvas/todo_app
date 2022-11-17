@@ -3,7 +3,7 @@
 # earlier versions of Drupal are tracked in `community/PHP/`
 
 # Ignore configuration files that may contain sensitive information
-/sites/*/*settings*.php
+#/sites/*/*settings*.php
 /sites/*/*services*.yml
 
 # Ignore paths that may contain user-generated content
@@ -22,7 +22,7 @@
 /sites/simpletest
 
 # Ignore drupal core (if not versioning drupal sources)
-/core
+#/core
 /modules/README.txt
 /profiles/README.txt
 /sites/README.txt
@@ -30,7 +30,7 @@
 /sites/example.settings.local.php
 /sites/development.services.yml
 /themes/README.txt
-/vendor
+#/vendor
 /.csslintrc
 /.editorconfig
 /.eslintignore
@@ -38,12 +38,12 @@
 /.gitattributes
 /.htaccess
 /autoload.php
-/composer.json
-/composer.lock
+#/composer.json
+#/composer.lock
 /example.gitignore
 /index.php
 /LICENSE.txt
 /README.txt
 /robots.txt
 /update.php
-/web.config
+#/web.config
